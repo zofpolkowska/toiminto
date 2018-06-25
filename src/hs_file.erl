@@ -4,22 +4,24 @@
 
 % --- API ------------------------------------------------------------------------------------------
 erl(File) ->
-    try parse(File) of
-        Tokens ->
-            Content = translate(Tokens),
-            Base = filename:basename(File, ".hs"),
-            Erl = lists:concat([Base, ".erl"]),
-            file:write_file(Erl, Content)
-    catch
-        error:Error ->
-            {Type, {Class, {Line, _, [Description, A]}}} = Error,
-            Msg = io:format("~s, line ~p: ~s\n\t\t~s ~s",[Class,Line,Type,Description,A]),
-            Msg;
-        exit:Exit ->
-            Exit;
-        throw:Throw ->
-            Throw
-    end.
+    Res = try parse(File) of
+              Tokens ->
+                  Content = translate(Tokens),
+                  Base = filename:basename(File, ".hs"),
+                  Erl = lists:concat([Base, ".erl"]),
+                  file:write_file(Erl, Content),
+                  {ok,Erl}
+          catch
+              error:Error ->
+                  {Type, {Class, {Line, _, [Description, A]}}} = Error,
+                  Msg = io:format("~s, line ~p: ~s\n\t\t~s ~s",[Class,Line,Type,Description,A]),
+                  Msg;
+              exit:Exit ->
+                  Exit;
+              throw:Throw ->
+                  Throw
+          end,
+    Res.
 
 %function
 translate({{function,Function, {'=', L}, Expr}, More}) ->

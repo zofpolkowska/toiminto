@@ -1,7 +1,7 @@
 toiminto
 =====
 
-Smarll part of Haskell to Erlang compiler
+smarll part of Haskell to Erlang compiler
 
 example
 ==

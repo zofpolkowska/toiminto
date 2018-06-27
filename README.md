@@ -13,6 +13,7 @@ Haskell file:
     g = "a" : "b" : ["s"]
 
 Test:
+
     $ rebar3 shell
     >ghci:l(baby).
     baby.erl:3: Warning: export_all flag enabled - all functions will be exported

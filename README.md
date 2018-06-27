@@ -1,11 +1,26 @@
 toiminto
 =====
 
-An OTP application
+Smarll part of Haskell to Erlang compiler
 
-Build
------
+example
+==
+Haskell file:
 
-    $ rebar3 compile
+    module Baby where
+    h x y = (x + 2) * x / y
+    f = "a" ++ "b"
+    g = "a" : "b" : ["s"]
+
+Test:
     $ rebar3 shell
-    $ toiminto_file:try_parse("your-file.hs").
+    >ghci:l(baby).
+    baby.erl:3: Warning: export_all flag enabled - all functions will be exported
+    module loaded: "baby.hs"
+    ok
+    2> baby:f().
+    "ab"
+    3> baby:g().
+    ["a","b","s"]
+    4> baby:h(1,3).
+    
